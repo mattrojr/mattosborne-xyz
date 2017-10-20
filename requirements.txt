@@ -1,0 +1,6 @@
+Django==1.11.3
+psycopg2==2.7.1
+pytz==2017.2
+django-storages==1.6.5
+boto3==1.4.5
+django-mptt==0.8.7

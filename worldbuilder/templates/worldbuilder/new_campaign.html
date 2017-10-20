@@ -1,0 +1,14 @@
+
+{% if campaign %}
+    <h1>Edit {{ campaign.name }}</h1>
+{% else %}
+    <h1>New Campaign</h1>
+{% endif %}
+
+<form action="" method="post">
+        {% csrf_token %}
+        <table>
+            {{ form }}
+        </table>
+        <input type="submit" value="Submit" />
+</form>

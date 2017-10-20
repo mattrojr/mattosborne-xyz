@@ -1,0 +1,39 @@
+{% extends "worldbuilder/skeleton.html" %}
+{% block title %}{{ campaign.name }} | {{ block.super }} {% endblock %}
+
+{% block content %}
+
+
+<div class="row">
+    <div class="col-xs-12 div--rounded">
+        <h1>{{ campaign.name }}</h1>
+
+        <p>{{ campaign.description|linebreaks }}</p>
+            {% load mptt_tags %}
+            <ul class="root">
+                {% recursetree nodes %}
+                    <li>
+                        <a href="/worldbuilder/area/{{ node.id }}">{{ node.code }}{{ node.name }}</a>
+                        {% if not node.is_leaf_node %}
+                            <ul class="children">
+                                {{ children }}
+                            </ul>
+                        {% endif %}
+                    </li>
+                {% endrecursetree %}
+            </ul>
+
+        <p><a href="/worldbuilder/new_area/{{ campaign.id }}">Create a new area</a></p>
+        <p><a href="/worldbuilder/edit_campaign/{{ campaign.id }}">Edit campaign</a></p>
+        <p><a href="/worldbuilder">Back to campaign list</a></p>
+        <p><a href="/worldbuilder/delete_campaign/{{ campaign.id }}">Delete campaign</a></p>
+        {% if purpose == 'delete' %}
+            <p>Warning, this is permanent.</p>
+            <form action="" method="POST">
+                {% csrf_token %}
+                <input type="submit" action="" value="Delete" />
+            </form>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,17 @@
+h1,h2,h3,h4,h5,h6 {
+    font-family: 'Roboto', sans-serif;
+}
+
+p {
+    font-family: 'Open Sans', sans-serif;
+}
+
+@media (max-width: 767px) {
+    #name, #contact {
+        text-align: center;
+    }
+}
+
+div {
+    background-color: white;
+}

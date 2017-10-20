@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+{% load static from staticfiles %}
+<html lang="en-US">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable-no">
+    <link rel="stylesheet" type="text/css" href='{% static "bootstrap/css/bootstrap.css" %}' />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href='{% static "base/css/style.css" %}' />
+    <title>Matt Osborne</title>
+</head>
+
+
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 col-sm-8 text-left" id="name">
+            <h1>Matt Osborne</h1>
+            <h3>Software Developer</h3>
+        </div>
+        <div class="col-md-4 col-sm-4 text-right" id="contact" style="padding-top:15px;">
+            <h4><a href="mailto:mail@mattosborne.xyz">mail@mattosborne.xyz</a></h4>
+            <h4><a href="https://www.linkedin.com/in/matthew-osborne-33b89b9b/">LinkedIn</a></h4>
+            <h4><a href="https://github.com/mattrojr">Github</a></h4>
+        </div>
+    </div>
+
+    <div class="row">
+        <h2 class="text-center">Projects</h2>
+    </div>
+    <div class="row">
+        <div class="col-md-6 col-sm-6">
+            <h3>World Builder</h3>
+            <h5>In progress</h5>
+            <p>
+                Developing a web app intended to help manage content in tabletop role playing games. The project has
+                provided an opportunity to learn or further develop skills in a number of areas: Django, PostgreSQL,
+                Bootstrap, and the use of Amazon Web Services (Elastic Beanstalk, Relational Database Service, and
+                Certificate Manager). Responsible for all work on the project.
+            </p>
+            <p>
+                <a href="https://github.com/mattrojr/mattosborne_xyz/">GitHub</a>
+            </p>
+            <p>
+                <a href="/worldbuilder">Site</a>
+            </p>
+        </div>
+        <div class="col-md-6 col-sm-6">
+            <h3>Software Engineering</h3>
+            <h5>Rowan - Spring 2017</h5>
+            <p>
+                Developed a system that scans files and generates reports on various elements of the CMS-2Y code they
+                contain for ASRC Federal Mission Solutions. An Agile software development methodology was used for the
+                project. Personal responsibilities included defining system requirements, managing communication with
+                contacts from Federal Mission Solutions, and acting as product owner in the Scrum process.
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 col-sm-6">
+            <h3>Senior Project</h3>
+            <h5>Rowan - Fall 2016</h5>
+            <p>
+                Built a website meant to connect skilled individuals with volunteering opportunities. The project
+                utilized the Ruby on Rails web application framework and focused on database design, the MVC software
+                pattern, and the REST architectural style. Personal responsibilities include leading team meetings,
+                determining project requirements, and participating in development of the site.
+            </p>
+            <p>
+                <a href="https://github.com/Tillett/Voluntr">GitHub</a>
+            </p>
+            <p>
+                <a href="https://quiet-oasis-71789.herokuapp.com/home">Site</a>
+            </p>
+        </div>
+    </div>
+
+    <div class="row">
+        <h2 class="text-center">Education</h2>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+            <h3>Rowan University—Glassboro, New Jersey</h3>
+            <h5>B.S. in Computer Science with a Cyber Security specialization</h5>
+            <h5>graduated Magna Cum Laude May 2017</h5>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+            <h3>Atlantic Cape Community College—Mays Landing, New Jersey</h3>
+            <h5>A.S. in Computer Information Systems</h5>
+            <h5>graduated with High Honors May 2015</h5>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,59 @@
+{% extends "worldbuilder/skeleton.html" %}
+{% block title %}
+        {% if area %}
+                {{ area.name }} |
+        {% else %}
+                New Area |
+        {% endif %}
+
+        {{ region.name }} | {{ block.super }}
+{% endblock %}
+
+{% block content %}
+<div class="row">
+        <div class="col-md-4 div--rounded">
+                <h1>Tips</h1>
+                <p>The following can be used in this area's description or notes:</p>
+                <ul>
+                        <li>To connect to another area, include "area " and the area code in the text. For example,
+                                area X15 would connect to an area with the code X15 if that area existed in the same
+                                region as this area.
+                        </li>
+                        <li>Text with the format "#d#" will allow you to click on it for the relevant dice roll result
+                                while viewing the area. So 5d8 would give you the result of rolling 5 eight-sided dice
+                                when clicked on.
+                        </li>
+                        <li>Text put between three hyphens will be visually separated from the text around it. Putting
+                                ---this example text--- in the middle of the text would result in
+                                <p class="readAloud">
+                                        this example text
+                                </p>
+                                being shown on the area's page. This is intended to visually separate sections meant to
+                                be read to your players but can be used for any purpose.
+                        </li>
+                </ul>
+        </div>
+        <div class="col-md-4 div--rounded">
+                {% if not area %}
+                <h1>New Area in {{ region.name }}</h1>
+                {% else %}
+                <h1>Edit {{ area.name }}</h1>
+                {% endif %}
+                <form action="" method="post">
+                        {% csrf_token %}
+                        <table>
+                                {{ area_form }}
+                        </table>
+                        <input type="submit" value="Submit" />
+                </form>
+        </div>
+        <div class="col-md-4 div--rounded">
+                <h1>Area Code Reference</h1>
+                <ul>
+                {% for area in area_list %}
+                        <li>{{ area.code }}. {{ area.name }}</li>
+                {% endfor %}
+                </ul>
+        </div>
+</div>
+{% endblock %}

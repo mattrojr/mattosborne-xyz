@@ -1,0 +1,50 @@
+{% extends "worldbuilder/skeleton.html" %}
+{% block title %}{{ area.code }}.{{ area.name }} | {{ block.super }} {% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-8">
+            <div class="row">
+                <div class="col-xs-12 text-center div--rounded">
+                    <h1>{{area.code}}. {{ area.name }}</h1>
+                </div>
+            </div>
+            <div class="row">
+                    <div class="btn-group btn-group-justified">
+                        <a href="/worldbuilder/edit_area/{{ area.id }}" class="btn btn-primary">Edit Area</a>
+                        <a href="/worldbuilder/delete_area/{{ area.id }}" class="btn btn-primary">
+                            Delete Area
+                            {% if purpose == 'delete' %}
+                                <p>Warning, this is permanent.</p>
+                                <form action="" method="POST">
+                                    {% csrf_token %}
+                                    <input type="submit" action="" value="Confirm" style="color:black;"/>
+                                </form>
+                            {% endif %}
+                        </a>
+                        <a href="/worldbuilder/campaign/{{ campaign.id }}" class="btn btn-primary">Back</a>
+                    </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-6 div--rounded">
+                    <h3 class="text-center">Description</h3>
+                    <div style="max-height: 50vh; overflow-y: auto;">
+                        <p>{{ area_description|safe|linebreaks }}</p>
+                    </div>
+                </div>
+
+                <div class="col-md-6 div--rounded">
+                    <h3 class="text-center">Notes</h3>
+                    <div style="max-height: 50vh; overflow-y: auto;">
+                        {{ area_notes|safe|linebreaks }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4  div--rounded">
+            <h1 class="text-center">Future use</h1>
+        </div>
+    </div>
+<script>setDice();</script>
+{% endblock %}

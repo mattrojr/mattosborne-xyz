@@ -1,0 +1,77 @@
+.readAloud {
+    margin: 10px;
+    padding: 5px;
+    border-style: solid;
+    border-width: 0px 0px 0px 1px;
+    font-style: italic;
+}
+
+div[class*="col"] {
+    background-color: white;
+}
+
+div[class*="row"] {
+    background-color: #0fa6db;
+}
+
+
+body {
+    background-color: #0fa6db;
+}
+
+.div--rounded {
+    border:1px solid #e7e7e7;
+    border-radius:5px;
+    padding-bottom:10px;
+    background-color:white;
+}
+
+.navbar--noRadius {
+    border-radius: 0;
+}
+
+.btn-primary {
+    border:solid black 1px;
+    color:black;
+    background-color:white;
+}
+
+.btn-primary:active {
+    background-color: #f8f8f8;
+    color:black;
+}
+
+.btn-primary:focus {
+    background-color: #e7e7e7;
+    color:black;
+}
+
+.btn-primary:active:focus {
+    background-color: #e7e7e7;
+    color:black;
+}
+
+.btn-primary:hover {
+    background-color: #f8f8f8;
+    color:black;
+}
+
+.remove-vertical-margin {
+    margin-top:0;
+    margin-bottom:0;
+}
+
+.navbar-nav > li > a, .navbar-brand {
+    padding-top:5px !important;
+    padding-bottom:0 !important;
+    height: 30px; }
+
+.navbar {
+    min-height:30px !important;
+}
+
+.navbar-toggle {
+    padding: 0 0;
+    margin-top: 7px;
+    margin-bottom: 0;
+}
