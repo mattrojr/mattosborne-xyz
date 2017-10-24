@@ -31,7 +31,13 @@ def campaign(request,campaign_id):
         try:
             gm = GameMaster.objects.get(campaign=campaign_id,user=request.user)
         except ObjectDoesNotExist:
+            alert = {
+                'type':"danger",
+                'title':"Campaign access failed",
+                'text':"Campaign doesn't exist or you aren't listed as a game master.",
+                     }
             context = {
+                'alert': alert,
             }
             return render(request, 'worldbuilder/index.html', context)
         if gm:
@@ -44,8 +50,13 @@ def campaign(request,campaign_id):
             return render(request, 'worldbuilder/campaign.html', context)
 
     else:
+        alert = {
+            'type':"danger",
+            'title':"Campaign access failed",
+            'text':"You must be logged in to view this campaign",
+        }
         context = {
-
+            'alert':alert,
         }
         return render(request, 'worldbuilder/index.html',context)
 
@@ -57,10 +68,14 @@ def area(request, area_id):
             campaign=area.campaign
             gm = GameMaster.objects.get(campaign=campaign,user=request.user)
         except ObjectDoesNotExist:
-            context = {}
-            return render(request, 'worldbuilder/index.html', context)
-        except MultipleObjectsReturned:
-            context = {}
+            alert = {
+                'type': "danger",
+                'title': "Campaign access failed",
+                'text': "You must be logged in to view this campaign and its areas",
+            }
+            context = {
+                'alert':alert,
+            }
             return render(request, 'worldbuilder/index.html', context)
         if gm:
             area_notes = escape(area.notes)
@@ -103,7 +118,7 @@ def new_campaign(request):
                     user = request.user,
                 )
                 gm.save()
-                return redirect('/worldbuilder')
+                return redirect('/worldbuilder/campaign/' + str(campaign.id))
         else:
             form = CampaignForm()
             context = {
@@ -117,12 +132,18 @@ def new_campaign(request):
 
 def new_area(request,campaign_id):
     if request.user.is_authenticated():
-        campaign = Campaign.objects.get(id=campaign_id)
-        gms = GameMaster.objects.filter(campaign=campaign_id)
         try:
+            campaign = Campaign.objects.get(id=campaign_id)
+            gms = GameMaster.objects.filter(campaign=campaign_id)
             gms.get(user=request.user)
         except:
-            return redirect('worldbuilder/')
+            #TODO: send alert along with the redirect
+            alert = {
+                'type': "danger",
+                'title': "Campaign access denied",
+                'text': "You must be a game master of the campaign to create areas for it."
+            }
+            return redirect('/worldbuilder/')
         area_list = Area.objects.filter(campaign=campaign_id)
         if request.method == 'POST':
             area_form = AreaForm(request.POST, campaign=campaign_id)
@@ -138,7 +159,7 @@ def new_area(request,campaign_id):
                 )
                 area.save()
 
-                return redirect('/worldbuilder/campaign/' + campaign_id)
+                return redirect('/worldbuilder/area/' + str(area.id))
         else:
             area_form = AreaForm(campaign=campaign_id)
             campaign = Campaign.objects.get(id=campaign_id)
@@ -153,15 +174,20 @@ def new_area(request,campaign_id):
 
 
 def edit_campaign(request,campaign_id):
-    campaign = Campaign.objects.get(id=campaign_id)
     if request.user.is_authenticated():
         try:
+            campaign = Campaign.objects.get(id=campaign_id)
             GameMaster.objects.get(campaign=campaign_id,user=request.user)
         except ObjectDoesNotExist:
-            return render(request, 'worldbuilder/index.html', {})
-        except MultipleObjectsReturned:
-            print('MultipleObjectsReturned error, check database')
-            return render(request, 'worldbuilder/index.html', {})
+            alert = {
+                'type': "danger",
+                'title': "Campaign access failed",
+                'text': "Campaign doesn't exist or you aren't listed as a game master.",
+            }
+            context={
+                'alert': alert,
+            }
+            return render(request, 'worldbuilder/index.html', context)
         if request.method == 'POST':
             form = CampaignForm(request.POST, instance=campaign)
 
@@ -178,21 +204,22 @@ def edit_campaign(request,campaign_id):
 
 
 def edit_area(request,area_id):
-    area = Area.objects.get(id=area_id)
     try:
+        area = Area.objects.get(id=area_id)
         campaign = area.campaign
         GameMaster.objects.get(campaign=campaign, user=request.user)
         area_list = Area.objects.filter(campaign=campaign)
-        # children = area.get_descendants()
-        # child_ids = []
-        # for child in children:
-        #     child_ids.append(child.id)
-        # area_list = area_list.exclude(id__in=child_ids)
     except ObjectDoesNotExist:
-        return render(request, 'worldbuilder/index.html', {})
-    except MultipleObjectsReturned:
-        print('MultipleObjectsReturned error, check database')
-        return render(request, 'worldbuilder/index.html', {})
+        alert = {
+            'type': "danger",
+            'title': "Area access failed",
+            'text': "Area doesn't exist or you aren't listed as a game master of its campaign.",
+        }
+        context = {
+            'alert':alert,
+        }
+        return render(request, 'worldbuilder/index.html', context)
+
     if request.method == 'POST':
         area_form = AreaForm(request.POST, instance=area, campaign=campaign)
 
@@ -210,12 +237,20 @@ def edit_area(request,area_id):
 
 
 def delete_campaign(request,campaign_id):
-    campaign = Campaign.objects.get(id=campaign_id)
     if request.user.is_authenticated():
         try:
+            campaign = Campaign.objects.get(id=campaign_id)
             GameMaster.objects.get(campaign=campaign_id, user=request.user)
         except ObjectDoesNotExist:
-            return render(request, 'worldbuilder/index.html', {})
+            alert = {
+                'type': "danger",
+                'title': "Campaign access failed",
+                'text': "Campaign doesn't exist or you aren't listed as a game master.",
+            }
+            context = {
+                'alert': alert,
+            }
+            return render(request, 'worldbuilder/index.html', context)
         if request.method == 'POST':
             campaign.delete()
             return redirect('/worldbuilder/')
@@ -236,10 +271,15 @@ def delete_area(request, area_id):
             campaign = area.campaign
             GameMaster.objects.get(campaign=campaign, user=request.user)
         except ObjectDoesNotExist:
-            return render(request, 'worldbuilder/index.html', {})
-        except MultipleObjectsReturned:
-            print('MultipleObjectsReturned error, check database')
-            return render(request, 'worldbuilder/index.html', {})
+            alert = {
+                'type': "danger",
+                'title': "Campaign access failed",
+                'text': "Area doesn't exist or you aren't listed as a game master.",
+            }
+            context = {
+                'alert': alert,
+            }
+            return render(request, 'worldbuilder/index.html', context)
         if request.method == 'POST':
             area.delete()
             return redirect('/worldbuilder/campaign/' + str(campaign.id))

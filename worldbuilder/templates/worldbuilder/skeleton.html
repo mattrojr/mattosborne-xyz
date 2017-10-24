@@ -40,6 +40,11 @@
         </div>
     </nav>
     <div class="container-fluid">
+        {% if alert %}
+            <div class="alert alert-{{ alert.type }}" style="margin-bottom:2px;">
+                <strong>{{ alert.title }}:</strong> {{ alert.text }}
+            </div>
+        {% endif %}
         {% block content %}{% endblock %}
     </div>
 </body>
