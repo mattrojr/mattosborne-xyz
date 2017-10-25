@@ -13,7 +13,7 @@
             <ul class="root">
                 {% recursetree nodes %}
                     <li>
-                        <a href="/worldbuilder/area/{{ node.id }}">{{ node.code }}{{ node.name }}</a>
+                        <a href="/worldbuilder/area/{{ node.id }}">{{ node.code }}. {{ node.name }}</a>
                         {% if not node.is_leaf_node %}
                             <ul class="children">
                                 {{ children }}

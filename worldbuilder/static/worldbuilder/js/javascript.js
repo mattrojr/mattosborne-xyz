@@ -5,6 +5,7 @@ function setDice() {
     });
 }
 
+//TODO: modify to default to 1dy when x in xdy not specified
 function rollDice(event) {
     var diceText = event.target.innerHTML.split('d');
     var numDice = parseInt(diceText[0],10);

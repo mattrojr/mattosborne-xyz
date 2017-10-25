@@ -15,21 +15,37 @@
                 <h1>Tips</h1>
                 <p>The following can be used in this area's description or notes:</p>
                 <ul>
-                        <li>To connect to another area, include "area " and the area code in the text. For example,
+                        <li>
+                                To connect to another area, include "area " and the area code in the text. For example,
                                 area X15 would connect to an area with the code X15 if that area existed in the same
                                 region as this area.
                         </li>
-                        <li>Text with the format "#d#" will allow you to click on it for the relevant dice roll result
+                        <li>
+                                Text with the format "#d#" will allow you to click on it for the relevant dice roll result
                                 while viewing the area. So 5d8 would give you the result of rolling 5 eight-sided dice
                                 when clicked on.
                         </li>
-                        <li>Text put between three hyphens will be visually separated from the text around it. Putting
+                        <li>
+                                Text put between three hyphens will be visually separated from the text around it. Putting
                                 ---this example text--- in the middle of the text would result in
                                 <p class="readAloud">
                                         this example text
                                 </p>
                                 being shown on the area's page. This is intended to visually separate sections meant to
                                 be read to your players but can be used for any purpose.
+                        </li>
+                        <li>
+                                To create a table, use the following format:<br>
+                                <span style="padding-top:10px;padding-bottom:10px;padding-left:20px">
+                                table{name:Table Name; col Column 1, Column 2; content1, content 2; content 3, content 4}
+                                </span>
+                                <br>Table name and column names are optional. This will display as:
+                                <table>
+                                        <tr><th>Table Name</th></tr>
+                                        <tr><td> col Column 1</td><td> Column 2</td></tr>
+                                        <tr><td> content1</td><td> content 2</td></tr>
+                                        <tr><td> content 3</td><td> content 4</td></tr>
+                                </table>
                         </li>
                 </ul>
         </div>

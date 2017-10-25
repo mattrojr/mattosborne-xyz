@@ -82,6 +82,7 @@ def area(request, area_id):
             area_notes = markup_area_links(area_notes, area)
             area_notes = markup_dice_rolls(area_notes)
             area_notes = markup_read_aloud(area_notes)
+            area_notes = markup_tables(area_notes)
 
             area_description = escape(area.description)
             area_description = markup_area_links(area_description, area)
@@ -327,11 +328,39 @@ def markup_read_aloud(text):
             text[i] = '<div class="readAloud">' + read_aloud.group(3) + '</div>'
     return ''.join(text)
 
-
+#TODO: modify to match dy
 def markup_dice_rolls(text):
     text = re.split('(\d+d\d+)', text, flags=re.IGNORECASE)
     for i, val in enumerate(text):
         dice_match = re.fullmatch('(\d+d\d+)', val, flags=re.IGNORECASE)
         if dice_match:
             text[i] = '<span class="diceRoll">' + val + '</span>'
+    return ''.join(text)
+
+
+def markup_tables(text):
+    text = re.split('(table{.*?})', text, flags=re.DOTALL)
+    for i, val in enumerate(text):
+        table_match = re.fullmatch('table{\s*(?P<contents>.*?)}', val, flags=re.DOTALL|re.IGNORECASE)
+        if table_match:
+            table_split = re.split(';', table_match.group('contents'), flags=re.DOTALL)
+            table = '<table>'
+            if re.match('name:', table_split[0], flags=re.DOTALL):
+                table +=  '<tr><th>' +table_split[0][5:] + '</tr></th>'
+                table_split.pop(0)
+            if re.match('col', table_split[0], flags=re.DOTALL):
+                col_split = re.split(',', table_split[0][3:], flags=re.DOTALL)
+                table += '<tr>'
+                for col in col_split:
+                    table += '<th>'+col+'</th>'
+                table+='</tr>'
+                table_split.pop(0)
+            for line in table_split:
+                row = re.split(',', line, flags=re.DOTALL)
+                table+='<tr>'
+                for col in row:
+                    table+='<td>'+col+'</td>'
+                table+='</tr>'
+            table+='</table>'
+            text[i]=table
     return ''.join(text)
